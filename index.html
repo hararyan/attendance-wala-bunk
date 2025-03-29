@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance System</title>
+    <style>
+        /* Existing styles here */
+        /* Additional styles for Bunk Calculator */
+        body{
+            background-color: black;
+            padding: 0;
+            margin: 0;
+        }
+        .outer{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-top: 40px;
+            margin-bottom: 30px;
+
+        
+        
+        }
+        .bunk-calculator {
+            display: flex;
+            flex-direction: column;
+            height: 50%;
+            width: 50%;
+            justify-content: center;
+            
+            text-align: center;
+            
+            background-color: black;
+            color: wheat;
+            padding: 50px;
+            border: 1px solid red;
+            margin-right: 50px;
+        }
+
+        .bunk-calculator input, .bunk-calculator button {
+            text-align: center;
+            justify-content: center;
+            padding: 20px;
+            font-size: 16px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 90%;
+            border-radius: 20px;
+            font-size: medium;
+            max-width: 400px;
+        }
+
+        .bunk-calculator button {
+            background-color: wheat;
+            color:black;
+            cursor: pointer;
+        }
+
+        .bunk-calculator p {
+            margin-top: 10px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .bunk-img{
+              width: 100%;
+              align-items: center;
+        }
+        .disc{
+            color: red;
+            text-align: center;
+        }
+        .FOO{
+            color: wheat;
+            text-align: center;
+        }
+        #bunkResult{
+
+
+        }
+        
+    </style>
+</head>
+<body>
+    <!-- Existing code here -->
+
+    <!-- New Bunk Calculator Section -->
+     <h4 class="disc">"WE DONT ENCOURAGE BUNKING SO BE REGULAR TO CLASSES"</h4>
+     <div class="outer">
+    <div class="bunk-calculator card">
+        <div class="bunk-img">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpGbtvbA5blejVKitqgeCOQiREoylNm62yqg&s" alt="">
+        </div>
+        <h1>Bunk Calculator</h1>
+        <div>
+        <input type="number" id="totalClasses" placeholder="Enter Total Classes" min="0">
+        <input type="number" id="attendedClasses" placeholder="Enter Classes Attended" min="0">
+        <input type="number" id="attendanceTarget" placeholder="Enter Attendance Target (%)" min="0" max="100" value="75">
+        <button onclick="calculateBunk()">Calculate Bunk</button>
+
+        <p id="bunkResult"></p>
+        </div>
+    </div>
+    </div>
+    <FOoter class="FOO">TEAM ATTENDANCE-WALA</FOoter>
+
+    <script>
+        // Existing JavaScript here
+
+        // Bunk Calculator Logic
+        function calculateBunk() {
+            const totalClasses = document.getElementById('totalClasses').value;
+            const attendedClasses = document.getElementById('attendedClasses').value;
+            const attendanceTarget = document.getElementById('attendanceTarget').value;
+            const bunkResult = document.getElementById('bunkResult');
+
+            if (!totalClasses || !attendedClasses || !attendanceTarget) {
+                bunkResult.textContent = "Please fill in all fields.";
+                return;
+            }
+
+            const currentAttendance = (attendedClasses / totalClasses) * 100;
+            const classesToReachTarget = (attendanceTarget * totalClasses / 100) - attendedClasses;
+            let resultMessage = "";
+
+            if (currentAttendance >= attendanceTarget) {
+                const possibleBunks = Math.floor(attendedClasses / (attendanceTarget / 100) - totalClasses);
+                resultMessage = `Your current attendance is ${currentAttendance.toFixed(2)}%. You can bunk ${possibleBunks} more classes and still maintain ${attendanceTarget}% attendance.`;
+            } else {
+                resultMessage = `Your current attendance is ${currentAttendance.toFixed(2)}%. You need to attend ${Math.ceil(classesToReachTarget)} more classes to reach ${attendanceTarget}% attendance.`;
+            }
+
+            bunkResult.textContent = resultMessage;
+        }
+    </script>
+</body>
+</html>
